@@ -1,23 +1,36 @@
-FROM python:3.7-slim
+FROM python:3.6-slim
+
+ARG PYTHON_VERSION=3.6
+COPY setup_10.x /tmp/
+RUN bash /tmp/setup_10.x
 
 RUN apt-get update && apt-get install  -y --no-install-recommends \
+    build-essential \
     nodejs \
-    gcc \
-    make \
-    g++ \
-    gfortran \
+    cmake \
     libpng-dev \
-    freetype-dev libxml2-dev libxslt-dev \
+    libxml2 \
     curl \
     git \
-    && \
+    ca-certificates \
+    libjpeg-dev \
+    libpng-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# ENV PATH /opt/conda/bin:$PATH
+# RUN curl -o ~/miniconda.sh -O  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh  && \
+#      chmod +x ~/miniconda.sh && \
+#      ~/miniconda.sh -b -p /opt/conda && \
+#      rm ~/miniconda.sh && \
+#      /opt/conda/bin/conda install -y python=$PYTHON_VERSION numpy pyyaml scipy ipython mkl mkl-include ninja cython typing pytorch && \
+#      /opt/conda/bin/conda clean -ya
+
 ENV LANG=C.UTF-8
 
+
 COPY requirements.txt requirements.txt
-RUN pip --no-cache-dir install -r requirements.txt  -i https://pypi.douban.com/simple
+RUN pip --no-cache-dir install -r requirements.txt
 COPY installext.sh  installext.sh
 RUN ./installext.sh
 
