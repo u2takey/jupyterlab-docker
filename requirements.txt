@@ -1,0 +1,11 @@
+jupyter
+ipywidgets
+jupyterlab 
+cython
+numpy
+pandas
+matplotlib
+folium
+lxml
+nltk
+pytorch
