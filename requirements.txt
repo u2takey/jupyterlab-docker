@@ -1,9 +1,0 @@
-jupyter
-ipywidgets
-jupyterlab 
-cython
-pandas
-matplotlib
-folium
-lxml
-nltk
